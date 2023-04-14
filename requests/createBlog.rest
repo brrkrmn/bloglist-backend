@@ -1,9 +1,0 @@
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyIsImlkIjoiNjQzOWE3NDM5MjY2NjE2Y2EzZDU2MmQ3IiwiaWF0IjoxNjgxNTA1Mzk2fQ.GY9Lf1NDsrV4fBMaJQSGMUVwufm7or9A5ZqtEmDwGr8
-
-{
-    "title": "you cannot delete this postt",
-    "author": "new",
-    "url": "neee"
-}

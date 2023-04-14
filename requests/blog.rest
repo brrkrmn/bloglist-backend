@@ -1,0 +1,31 @@
+GET http://localhost:3003/api/blogs
+Content-Type: application/json
+
+###
+GET http://localhost:3003/api/blogs/6437a222a87eb50a05af899e
+Content-Type: application/json
+
+###
+POST http://localhost:3003/api/blogs
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ldyIsImlkIjoiNjQzOWE3NDM5MjY2NjE2Y2EzZDU2MmQ3IiwiaWF0IjoxNjgxNTA1Mzk2fQ.GY9Lf1NDsrV4fBMaJQSGMUVwufm7or9A5ZqtEmDwGr8
+
+{
+    "title": "you cannot delete this postt",
+    "author": "new",
+    "url": "neee"
+}
+
+###
+DELETE http://localhost:3003/api/blogs/6439bca6f80bc04106638f0f
+Content-Type: application/json  
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0MzdhMjIzYTg3ZWI1MGEwNWFmODlhMyIsImlhdCI6MTY4MTUwNDE0OX0.FUiH42MXyuBoolNvsmy_W_8mBStCmdR7Qcoo6_2S8MQ
+
+###
+PUT http://localhost:3003/api/blogs/6439bae7c459250aabf50a72
+Content-Type: application/json
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY0MzdhMjIzYTg3ZWI1MGEwNWFmODlhMyIsImlhdCI6MTY4MTUwNDE0OX0.FUiH42MXyuBoolNvsmy_W_8mBStCmdR7Qcoo6_2S8MQ
+
+{
+    "title": "wow"
+}
