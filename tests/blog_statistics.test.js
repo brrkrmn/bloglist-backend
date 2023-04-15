@@ -62,8 +62,25 @@ const listWithMultipleBlogs = [
     }  
 ]
 
+describe('finding the total likes', () => {
+    test('in an empty list is zero', () => {
+        const result = listHelper.totalLikes(listWithNoBlog)
+        expect(result).toBe(0)
+    })
+    
+    test('when list has only one blog, equals the likes of that', () => {
+        const result = listHelper.totalLikes(listWithOneBlog)
+        expect(result).toBe(5)
+    })
+
+    test('in a bigger list is calculated right', () => {
+        const result = listHelper.totalLikes(listWithMultipleBlogs)
+        expect(result).toBe(36)
+    })
+})
+
 describe('finding the favorite blog', () => {
-    test('in a empty list returns "no favorite blogs"', () => {
+    test('in an empty list returns "no favorite blogs"', () => {
         const result = listHelper.favoriteBlog(listWithNoBlog)
         expect(result).toEqual('no favorite blogs')
     })

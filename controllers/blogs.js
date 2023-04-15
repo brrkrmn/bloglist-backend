@@ -1,8 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
-const User = require('../models/user')
-const jwt = require('jsonwebtoken')
-const { userExtractor } = require('../utils/middleware')
+const { tokenExtractor, userExtractor } = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
     const blogs = await Blog
@@ -23,9 +21,10 @@ blogsRouter.get('/:id', (request, response, next) => {
         .catch(error => next(error))
 })
 
-blogsRouter.post('/', userExtractor, async (request, response) => {
+blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) => {
     const body = request.body
     if (!body.title || !body.url) {return response.status(400).json({ error: 'content missing' })}
+
     const user = request.user 
     const blog = new Blog({
         title: body.title,
@@ -37,14 +36,14 @@ blogsRouter.post('/', userExtractor, async (request, response) => {
     
     const result = await blog.save()
     user.blogs = user.blogs.concat(result._id)
-    await user.save()
+    
+    await user.save()    
     response.status(201).json(result)        
 })
 
-blogsRouter.delete('/:id', userExtractor, async (request, response) => {
+blogsRouter.delete('/:id', tokenExtractor, userExtractor, async (request, response) => {
     const user = request.user
     const blog = await Blog.findById(request.params.id)
-    console.log
     if (blog.user.toString() !== user.id) {
         return response.status(401).json({ error: 'user not authorized to delete post' })
     }
@@ -53,7 +52,7 @@ blogsRouter.delete('/:id', userExtractor, async (request, response) => {
     response.status(204).end()
 })
 
-blogsRouter.put('/:id', userExtractor, async(request, response) => {
+blogsRouter.put('/:id', tokenExtractor, userExtractor, async(request, response) => {
     const user = request.user
     const blogToBeEdited = await Blog.findById(request.params.id)
 

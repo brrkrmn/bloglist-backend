@@ -2,16 +2,14 @@ const Blog = require('../models/blog')
 const User = require('../models/user')
 const initialBlogs = [
     {
-        title: 'This is the first blog',
-        author: 'Berra',
+        title: 'First blog by root',
+        author: 'root',
         url: 'url1',
-        likes: 3,
     },
     {
-        title: 'second blog',
-        author: 'Esma',
+        title: 'Second blog by root',
+        author: 'root',
         url: 'url2',
-        likes: 9,
     }
 ]
 
