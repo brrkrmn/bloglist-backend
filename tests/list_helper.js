@@ -1,9 +1,5 @@
 const _ = require('lodash')
 
-const dummy = (blogs) => {
-    return 1
-}
-
 const totalLikes = (array) => (
     array.reduce((sum, blog) => (
         sum + blog.likes
@@ -42,10 +38,10 @@ const mostBlogs = (array) => {
 const mostLikes = (array) => {
     if (array.length === 0) {
         return "no blogs found"
-    } else {
-        
-    }
+    } 
+
     const sortedObject = _.groupBy(array, 'author')
+
     const summedLikes = Object.entries(sortedObject).map(author => {
         const authorName = author[0]
         const totalLikes = author[1].reduce((sum, blog) => {
@@ -58,19 +54,22 @@ const mostLikes = (array) => {
     })
       
     let highestLike = 0
-    const mostLiked = summedLikes.map(sum => {
+    let highestAuthor = ''
+    summedLikes.map(sum => {
         if (sum.likes > highestLike) {
-          highestLike = sum.likes
-          return sum
+            highestAuthor = sum.author
+            highestLike = sum.likes
         } else {
           highestLike = highestLike
         }
     })
-    return mostLiked[0]
+    return {
+        author: highestAuthor,
+        likes: highestLike
+    }
 }
 
 module.exports = {
-    dummy,
     totalLikes,
     favoriteBlog,
     mostBlogs,
