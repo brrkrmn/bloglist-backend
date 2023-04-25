@@ -1,4 +1,5 @@
 const blogsRouter = require('express').Router()
+const blog = require('../models/blog')
 const Blog = require('../models/blog')
 const { tokenExtractor, userExtractor } = require('../utils/middleware')
 
@@ -23,9 +24,11 @@ blogsRouter.get('/:id', (request, response, next) => {
 
 blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) => {
     const body = request.body
+
     if (!body.title || !body.url) {return response.status(400).json({ error: 'content missing' })}
 
     const user = request.user 
+    console.log(user)
     const blog = new Blog({
         title: body.title,
         author: body.author,
@@ -36,7 +39,7 @@ blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) =
     
     const result = await blog.save()
     user.blogs = user.blogs.concat(result._id)
-    
+    console.log(result)
     await user.save()    
     response.status(201).json(result)        
 })
@@ -44,30 +47,27 @@ blogsRouter.post('/', tokenExtractor, userExtractor, async (request, response) =
 blogsRouter.delete('/:id', tokenExtractor, userExtractor, async (request, response) => {
     const user = request.user
     const blog = await Blog.findById(request.params.id)
-    if (blog.user.toString() !== user.id) {
-        return response.status(401).json({ error: 'user not authorized to delete post' })
-    }
 
     await Blog.findByIdAndRemove(request.params.id)
     response.status(204).end()
 })
 
 blogsRouter.put('/:id', tokenExtractor, userExtractor, async(request, response) => {
+    const body = request.body
     const user = request.user
     const blogToBeEdited = await Blog.findById(request.params.id)
 
-    if (blogToBeEdited.user.toString() !== user.id) {
-        return response.status(401).json({ error: 'unauthorized' })
-    }
+    //To temporarily allow like updates    
+    // if (blogToBeEdited.user.toString() !== user.id) {
+    //     return response.status(401).json({ error: 'unauthorized' })
+    // }
 
-    const body = request.body
     const newBlog = {
         title: body.title,
         author: body.author,
         url: body.url,
         likes: body.likes
     }
-
 
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true })
     response.json(updatedBlog)
